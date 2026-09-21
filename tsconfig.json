@@ -1,10 +1,12 @@
 {
 	"compilerOptions": {
+		"ignoreDeprecations": "6.0",
 		"target": "es5",
 		"module": "esnext",
 		"jsx": "react",
 		"sourceMap": true,
 		"outDir": "dist",
+		"rootDir": "src",
 		"strict": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
@@ -12,7 +14,7 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"declaration": true,
-		"declarationDir": "types",
+		"declarationDir": "dist/types",
 		"emitDeclarationOnly": true
 	}
 }

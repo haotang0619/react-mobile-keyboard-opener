@@ -1,12 +1,13 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
+import { createRequire } from 'node:module';
 
-const packageJson = require('./package.json');
+const packageJson = createRequire(import.meta.url)('./package.json');
 
 export default [
   {
@@ -30,7 +31,11 @@ export default [
       external(),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: './tsconfig.json' }),
+      typescript({
+        tsconfig: './tsconfig.json',
+        declaration: false,
+        declarationDir: undefined,
+      }),
       postcss(),
       terser(),
     ],
@@ -46,6 +51,7 @@ export default [
         globals: {
           react: 'React',
           'react-dom': 'reactDom',
+          'react-dom/client': 'reactDom',
         },
       },
     ],
@@ -53,13 +59,17 @@ export default [
       external(),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: './tsconfig.json' }),
+      typescript({
+        tsconfig: './tsconfig.json',
+        declaration: false,
+        declarationDir: undefined,
+      }),
       postcss(),
       terser(),
     ],
   },
   {
-    input: 'dist/esm/types/index.d.ts',
+    input: 'dist/types/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'esm' }],
     external: [/\.css$/],
     plugins: [dts()],
