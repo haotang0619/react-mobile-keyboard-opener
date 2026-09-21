@@ -1,5 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
@@ -42,6 +43,15 @@ export default [
   },
   {
     input: 'src/iife.tsx',
+    // react-mobile-keyboard-opener's peer deps (react, react-dom) stay
+    // external so consumers provide their own UMD-style globals, but
+    // react/jsx-runtime is deliberately left out of that list: with the
+    // automatic JSX runtime, every JSX element compiles to a call into
+    // react/jsx-runtime, and unlike `react`/`react-dom` there's no browser
+    // global for it to resolve to at runtime — so it's bundled here
+    // instead, and internally still resolves to the externalized `react`
+    // global for the pieces it needs.
+    external: ['react', 'react-dom', 'react-dom/client'],
     output: [
       {
         file: packageJson.main.replace('cjs', 'iife'),
@@ -56,7 +66,14 @@ export default [
       },
     ],
     plugins: [
-      external(),
+      // react/jsx-runtime branches on process.env.NODE_ENV at its own
+      // module scope; without this, that branch (and the react-server dev
+      // build it selects) survives bundling untouched, since Rollup has no
+      // way to know its value on its own.
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
       resolve(),
       commonjs(),
       typescript({

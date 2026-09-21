@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, InputHTMLAttributes } from 'react';
 import './input.css';
 import useMobileKeyboardOpener from './useMobileKeyboardOpener';
 
@@ -7,7 +7,7 @@ type MobileKeyboardOpenerProps = {
   enabled?: (e: Event) => boolean;
   event?: keyof HTMLElementEventMap; // must be user interactions
   helperId: string;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
   preventScroll?: boolean;
   targetId?: string;
 };
