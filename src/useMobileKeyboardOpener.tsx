@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 export interface useMobileKeyboardOpenerOptions {
-  callback?: (...args: any[]) => any;
-  enabled?: (e: any) => boolean;
+  callback?: () => void;
+  enabled?: (e: Event) => boolean;
   event?: keyof HTMLElementEventMap; // must be user interactions
   focusOnInit?: boolean;
   helperId: string;
@@ -38,7 +38,7 @@ export const useMobileKeyboardOpener = (
         callback();
       } catch (e) {}
     };
-    const handler = (e: any) => {
+    const handler = (e: Event) => {
       if (enabled(e)) inputFocus();
     };
 

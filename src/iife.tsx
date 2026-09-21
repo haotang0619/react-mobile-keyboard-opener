@@ -5,7 +5,7 @@ import useMobileKeyboardOpener, { MobileKeyboardOpener } from './index';
 const App = () => {
   const setOptions = useMobileKeyboardOpener({
     callback: () => console.log('callback (target)'),
-    enabled: (e) => /[0-9]/.test(e.key),
+    enabled: (e) => /[0-9]/.test((e as KeyboardEvent).key),
     event: 'keyup',
     helperId: 'helper',
     targetId: 'target',

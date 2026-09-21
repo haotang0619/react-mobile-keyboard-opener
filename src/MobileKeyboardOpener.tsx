@@ -3,8 +3,8 @@ import './input.css';
 import useMobileKeyboardOpener from './useMobileKeyboardOpener';
 
 type MobileKeyboardOpenerProps = {
-  callback?: (...args: any[]) => any;
-  enabled?: (e: any) => boolean;
+  callback?: () => void;
+  enabled?: (e: Event) => boolean;
   event?: keyof HTMLElementEventMap; // must be user interactions
   helperId: string;
   inputProps?: React.HTMLAttributes<HTMLInputElement>;
