@@ -1,6 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
@@ -43,15 +42,18 @@ export default [
   },
   {
     input: 'src/iife.tsx',
-    // react-mobile-keyboard-opener's peer deps (react, react-dom) stay
-    // external so consumers provide their own UMD-style globals, but
-    // react/jsx-runtime is deliberately left out of that list: with the
-    // automatic JSX runtime, every JSX element compiles to a call into
-    // react/jsx-runtime, and unlike `react`/`react-dom` there's no browser
-    // global for it to resolve to at runtime — so it's bundled here
-    // instead, and internally still resolves to the externalized `react`
-    // global for the pieces it needs.
-    external: ['react', 'react-dom', 'react-dom/client'],
+    // Compiled with the classic JSX transform (see tsconfig.iife.json), not
+    // the automatic one the rest of the project uses: this bundle is meant
+    // to be dropped in via a plain <script> tag, so it has to work with
+    // whatever React major the host page happens to have loaded. Classic
+    // JSX calls React.createElement on that runtime-provided global, so it
+    // always matches whatever reconciler is actually present. The
+    // automatic runtime instead bundles react/jsx-runtime's own element
+    // construction as compiled here, tied to this repo's installed React
+    // version (its element tag changed between majors, e.g. React 19 uses
+    // Symbol.for("react.transitional.element") where 18 uses
+    // Symbol.for("react.element")) — that broke this exact bundle against
+    // the React 18 UMD build index.html loads, producing a blank page.
     output: [
       {
         file: packageJson.main.replace('cjs', 'iife'),
@@ -66,18 +68,11 @@ export default [
       },
     ],
     plugins: [
-      // react/jsx-runtime branches on process.env.NODE_ENV at its own
-      // module scope; without this, that branch (and the react-server dev
-      // build it selects) survives bundling untouched, since Rollup has no
-      // way to know its value on its own.
-      replace({
-        preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('production'),
-      }),
+      external(),
       resolve(),
       commonjs(),
       typescript({
-        tsconfig: './tsconfig.json',
+        tsconfig: './tsconfig.iife.json',
         declaration: false,
         declarationDir: undefined,
       }),
