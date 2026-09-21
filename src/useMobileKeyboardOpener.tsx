@@ -21,7 +21,27 @@ export const useMobileKeyboardOpener = (
     preventScroll: false,
   };
   const [opt, setOptions] = useState({ ...defaultOptions, ...options });
-  useEffect(() => setOptions(opt), [options]);
+  useEffect(() => {
+    // options is commonly passed as a fresh object literal on every render
+    // (this file's own MobileKeyboardOpener does exactly that), so callback
+    // and enabled are near-guaranteed to be new function references even
+    // when nothing meaningful changed. Only compare the primitive fields to
+    // decide whether an update is needed; if none changed, bail out by
+    // returning the previous state object, or this becomes an infinite
+    // render loop for any caller that doesn't memoize its options.
+    setOptions((prev) => {
+      const merged = { ...defaultOptions, ...options };
+      const reactiveKeys = [
+        'event',
+        'focusOnInit',
+        'helperId',
+        'preventScroll',
+        'targetId',
+      ] as const;
+      const hasChanged = reactiveKeys.some((key) => merged[key] !== prev[key]);
+      return hasChanged ? merged : prev;
+    });
+  }, [options]);
 
   useEffect(() => {
     const { callback, enabled, event, focusOnInit, helperId, preventScroll } =

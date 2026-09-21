@@ -7,7 +7,7 @@ type MobileKeyboardOpenerProps = {
   enabled?: (e: Event) => boolean;
   event?: keyof HTMLElementEventMap; // must be user interactions
   helperId: string;
-  inputProps?: React.HTMLAttributes<HTMLInputElement>;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   preventScroll?: boolean;
   targetId?: string;
 };

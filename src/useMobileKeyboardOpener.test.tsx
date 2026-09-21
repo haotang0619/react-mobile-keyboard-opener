@@ -141,6 +141,36 @@ describe('useMobileKeyboardOpener', () => {
     consoleError.mockRestore();
   });
 
+  it('re-attaches the listener to the new helper when options change on rerender', () => {
+    const callback = vi.fn();
+
+    function ReactiveHarness(props: { helperId: string }) {
+      useMobileKeyboardOpener({
+        helperId: props.helperId,
+        targetId: 'reactive-target',
+        callback,
+      });
+      return (
+        <>
+          <button id="reactive-helper-a">helper-a</button>
+          <button id="reactive-helper-b">helper-b</button>
+          <input id="reactive-target" />
+        </>
+      );
+    }
+
+    const { rerender } = render(
+      <ReactiveHarness helperId="reactive-helper-a" />,
+    );
+    rerender(<ReactiveHarness helperId="reactive-helper-b" />);
+
+    fireEvent.click(screen.getByText('helper-a'));
+    expect(callback).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByText('helper-b'));
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
   it('removes the listener on unmount', () => {
     const callback = vi.fn();
     const { unmount } = render(

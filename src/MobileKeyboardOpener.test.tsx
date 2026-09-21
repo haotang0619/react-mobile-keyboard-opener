@@ -57,6 +57,19 @@ describe('MobileKeyboardOpener', () => {
     expect(input.title).toBe('search');
   });
 
+  it('accepts input-specific inputProps like placeholder and type', () => {
+    render(
+      <MobileKeyboardOpener
+        helperId="helper"
+        inputProps={{ id: 'my-input', placeholder: 'search', type: 'text' }}
+      />,
+    );
+    const input = document.getElementById('my-input') as HTMLInputElement;
+
+    expect(input.placeholder).toBe('search');
+    expect(input.type).toBe('text');
+  });
+
   it('focuses targetId on mount when targetId is provided directly', () => {
     render(
       <>

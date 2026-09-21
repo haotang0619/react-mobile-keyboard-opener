@@ -70,7 +70,7 @@ function Example() {
 | `preventScroll` | `boolean` | `false` | passed through to `target.focus({ preventScroll })` |
 | `focusOnInit` | `boolean` | `false` | hook only — focus `targetId` once on mount, without waiting for `helperId` |
 
-`MobileKeyboardOpener` additionally accepts `inputProps` (`React.HTMLAttributes<HTMLInputElement>`), forwarded to the hidden `<input>` it renders. If `inputProps.id` is set, it's used as the fallback `targetId`; otherwise the fallback is `hidden_input`.
+`MobileKeyboardOpener` additionally accepts `inputProps` (`React.InputHTMLAttributes<HTMLInputElement>`), forwarded to the hidden `<input>` it renders. If `inputProps.id` is set, it's used as the fallback `targetId`; otherwise the fallback is `hidden_input`.
 
 ## Development
 
