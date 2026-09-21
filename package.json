@@ -12,9 +12,10 @@
     "README.md"
   ],
   "private": false,
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "npm run prebuild && tsc && rollup -c",
+    "build": "yarn prebuild && tsc && rollup -c",
     "watch": "(http-server -c-1 -p 8081 -o &) && rollup -cw",
     "lint": "eslint ."
   },

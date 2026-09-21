@@ -9,12 +9,15 @@ type MobileKeyboardOpenerProps = {
   helperId: string;
   inputProps?: React.HTMLAttributes<HTMLInputElement>;
   preventScroll?: boolean;
-  targetId: string;
+  targetId?: string;
 };
 
 export const MobileKeyboardOpener = (props: MobileKeyboardOpenerProps) => {
   const { inputProps, ...options } = props;
-  const setOptions = useMobileKeyboardOpener(options);
+  const setOptions = useMobileKeyboardOpener({
+    ...options,
+    targetId: options.targetId || inputProps?.id || 'hidden_input',
+  });
   useEffect(
     () =>
       setOptions((opt) =>
