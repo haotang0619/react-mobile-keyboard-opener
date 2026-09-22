@@ -28,6 +28,8 @@ export const MobileKeyboardOpener = (props: MobileKeyboardOpenerProps) => {
     [props],
   );
 
+  if (options.targetId) return null;
+
   return (
     <input
       id="hidden_input"

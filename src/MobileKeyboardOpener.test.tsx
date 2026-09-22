@@ -82,4 +82,19 @@ describe('MobileKeyboardOpener', () => {
 
     expect(document.getElementById('existing-target')).toHaveFocus();
   });
+
+  it('renders nothing when targetId is provided directly', () => {
+    const { container } = render(
+      <>
+        <input id="existing-target-2" />
+        <MobileKeyboardOpener
+          helperId="does-not-matter"
+          targetId="existing-target-2"
+        />
+      </>,
+    );
+
+    expect(document.getElementById('hidden_input')).not.toBeInTheDocument();
+    expect(container.querySelectorAll('input')).toHaveLength(1);
+  });
 });

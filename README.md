@@ -63,14 +63,14 @@ function Example() {
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `helperId` | `string` | *(required)* | id of the element the user interacts with |
-| `targetId` | `string` | *(required for the hook; component falls back to its own hidden input)* | id of the element to focus |
+| `targetId` | `string` | *(required for the hook; component falls back to its own hidden input)* | id of the element to focus. If you pass this to `MobileKeyboardOpener`, it renders nothing — you already have an element to focus, so there's no hidden input to add |
 | `event` | `keyof HTMLElementEventMap` | `'click'` | event on `helperId` that triggers focusing — must be a real user interaction for mobile browsers to allow the keyboard to open |
 | `enabled` | `(e: Event) => boolean` | `() => true` | return `false` to skip focusing for this particular event |
 | `callback` | `() => void` | `() => null` | called after the target has been focused |
 | `preventScroll` | `boolean` | `false` | passed through to `target.focus({ preventScroll })` |
 | `focusOnInit` | `boolean` | `false` | hook only — focus `targetId` once on mount, without waiting for `helperId` |
 
-`MobileKeyboardOpener` additionally accepts `inputProps` (`React.InputHTMLAttributes<HTMLInputElement>`), forwarded to the hidden `<input>` it renders. If `inputProps.id` is set, it's used as the fallback `targetId`; otherwise the fallback is `hidden_input`.
+`MobileKeyboardOpener` additionally accepts `inputProps` (`React.InputHTMLAttributes<HTMLInputElement>`), forwarded to the hidden `<input>` it renders when `targetId` is omitted. If `inputProps.id` is set, it's used as the fallback `targetId`; otherwise the fallback is `hidden_input`. `inputProps` is ignored when `targetId` is provided, since no hidden input gets rendered in that case.
 
 ## Development
 
