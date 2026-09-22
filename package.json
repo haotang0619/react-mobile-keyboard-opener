@@ -16,7 +16,7 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "yarn prebuild && tsc -p tsconfig.build.json && rollup -c",
-    "watch": "(http-server -c-1 -p 8081 -o &) && rollup -cw",
+    "watch": "(http-server -c-1 -p 8081 -o &) && tsc -p tsconfig.build.json && rollup -cw",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "test": "vitest run"
