@@ -16,19 +16,19 @@ export const MobileKeyboardOpener = (props: MobileKeyboardOpenerProps) => {
   const { inputProps, ...options } = props;
   const setOptions = useMobileKeyboardOpener({
     ...options,
-    targetId: options.targetId || inputProps?.id || 'hidden_input',
+    targetId: options?.targetId || inputProps?.id || 'hidden_input',
   });
   useEffect(
     () =>
       setOptions((opt) =>
-        !!options.targetId
+        !!options?.targetId
           ? { ...opt, ...options, focusOnInit: true }
           : { ...opt, ...options, targetId: inputProps?.id || 'hidden_input' },
       ),
     [props],
   );
 
-  if (options.targetId) return null;
+  if (options?.targetId) return null;
 
   return (
     <input

@@ -55,7 +55,7 @@ export const useMobileKeyboardOpener = (
         if (visibility === 'hidden') target.style.visibility = 'visible'; // unhide the input
         target.focus({ preventScroll }); // focus on it so keyboard pops
         if (visibility === 'hidden') target.style.visibility = 'hidden'; // hide it again
-        callback();
+        callback?.();
       } catch (error) {
         console.error(
           'useMobileKeyboardOpener: failed to focus target element',
@@ -64,7 +64,7 @@ export const useMobileKeyboardOpener = (
       }
     };
     const handler = (e: Event) => {
-      if (enabled(e)) inputFocus();
+      if (enabled?.(e)) inputFocus();
     };
 
     if (focusOnInit) inputFocus();
