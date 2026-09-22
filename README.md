@@ -1,8 +1,8 @@
 # React Mobile Keyboard Opener
 
-> Open the on-screen keyboard on mobile web pages in response to a user interaction, even when the input you want focused isn't the element the user actually tapped.
+> A React hook and component to focus an input and trigger the on-screen keyboard on mobile web pages, even when the input you want focused isn't the element the user actually tapped.
 
-Mobile browsers only pop the soft keyboard when `focus()` happens synchronously inside a real user-interaction event handler (e.g. `click`). This library wires that up for you: attach a listener to one element (`helperId`), and it focuses another element (`targetId`) inside that same handler.
+iOS Safari and other mobile browsers only pop the soft keyboard when `focus()` happens synchronously inside a real user-interaction event handler (e.g. `click`) — calling it after an `await` or inside a callback won't work. This library wires that up for you: attach a listener to one element (`helperId`), and it focuses another element (`targetId`) inside that same handler.
 
 ## Install
 

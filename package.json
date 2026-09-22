@@ -1,7 +1,7 @@
 {
   "name": "react-mobile-keyboard-opener",
-  "version": "2.0.0",
-  "description": "React component for opening the keyboard on mobile websites with user interactions.",
+  "version": "2.0.1",
+  "description": "React hook and component to focus an input and trigger the mobile on-screen keyboard (iOS Safari, Android Chrome) from a click on another element.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
@@ -24,11 +24,21 @@
   "keywords": [
     "react",
     "react-component",
+    "react-hook",
+    "hook",
     "mobile",
     "ios",
+    "safari",
     "android",
     "keyboard",
-    "input"
+    "soft-keyboard",
+    "virtual-keyboard",
+    "input",
+    "focus",
+    "touch",
+    "click",
+    "trigger",
+    "user-gesture"
   ],
   "author": "Howard Tang <t919901@gmail.com>",
   "license": "MIT",
